@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.game-board {
+    width: 80%;
+    height: 500px;
+    border-bottom: 15px solid rgb(35, 160, 35);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(#87CEEB, #E0F6FF);
+}
+.flower {
+    position: absolute;
+    bottom: 0;
+    width: 80px;
+    animation: flower-animation 1.5s infinite linear;
+}
+.mario{
+    width: 150px;
+    position: absolute;
+    bottom: 0;
+}
+.jump{
+    animation: jump 500ms ease-out;
+}
+.clouds{
+    position: absolute;
+    width: 100px;
+    animation: clouds-animation 10s infinite linear;
+}
+@keyframes flower-animation {
+    from {
+        right: -80px;
+    }
+
+    to {
+        right: 100%;
+    }
+}
+@keyframes jump {
+    0%{
+        bottom: 0;
+    }
+    40%{
+        bottom: 180px;
+    }
+    50%{
+        bottom: 180px;
+    }
+    60%{
+        bottom: 180px;
+    }
+    70%{
+        bottom: 180px;
+    }
+    100%{
+        bottom: 0px;
+    }
+}
+@keyframes clouds-animation {
+    from {
+        right: -100px;
+    }
+    to{
+        right: 100%;
+    }
+    
+}
+    </style>
+
+    <title>Protótipo Mario</title>
+
+</head>
+<body> 
+
+    <div class="game-board">
+
+        <img src="https://toppng.com/public/uploads/thumbnail/super-mario-bros-cloud-sprites-super-mario-cloud-11562890585c6ojks4ppn.png" class="clouds">
+        <img src = "https://gamerview.uai.com.br/wp-content/uploads/2019/12/mario-gif.gif" class="mario">
+        <img src = "https://66.media.tumblr.com/tumblr_m9wl8isr2h1rfjowdo1_500.gif" class="flower">
+    
+    </div>
+
+</body>
+<script>
+    const mario = document.querySelector('.mario');
+const flower = document.querySelector('.flower');
+
+const jump = () => {
+    mario.classList.add('jump');
+
+    setTimeout(() => {
+
+        mario.classList.remove('jump');  
+
+    },500);
+}
+
+const loop = setInterval(() => {
+
+    console.log('loop')
+
+    const flowerPosition = flower.offsetLeft;
+    const marioPosition = window.getComputedStyle(mario).bottom.replace('px', '');
+
+    console.log(marioPosition);
+
+    if (flowerPosition <= 120 && flowerPosition > 0 && marioPosition < 80){
+
+        flower.style.animation = 'none';
+        flower.style.left = `${flowerPosition}px`;
+
+        mario.style.animation = 'none';
+        mario.style.bottom = `${flowerPosition}px`;
+
+        mario.src = 'https://preview.redd.it/nd7ldj4dnvv71.png?width=160&format=png&auto=webp&s=037c2ac0835fbbe86363771ad6b6a76cda53a695';
+        mario.style.width = '75px';
+        mario.style.marginLeft = '50px';
+
+        clearInterval(loop)
+    }
+
+}, 10);
+
+
+document.addEventListener('keydown', jump);
+
+</script>
+</html>
